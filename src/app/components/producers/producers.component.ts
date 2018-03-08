@@ -21,24 +21,36 @@ export class ProducersComponent implements OnInit {
       this.producers = data;
       console.log(this.producers);
 
-      let dataPie = [];
+      const dataPie = [];
+      const dta = [];
+      const ticks = [];
+      const dataset = [];
+      let i = 0;
 
-      for (let producer of this.producers) {
-        dataPie.push({label: producer.name, data: producer.count})
+      for (const producer of this.producers) {
+        dataPie.push({label: producer.name, data: producer.count});
+        i++;
+        dta.push([i, producer.count]);
+        ticks.push([i, producer.name]);
       }
+      dataset.push([{ label: '2012 Average Temperature', data: dta, color: '#5482FF' }]);
 
-      $.plot($("#flot-pie-chart"), dataPie, {
+      $.plot($('#flot-bar-chart'), dataPie, {
         series: {
           pie: {
-            show: true
-          }
+            show: true,
+            innerRadius: 0.2,
+            label: {
+              show: true
+            }
+          },
         },
         grid: {
           hoverable: true
         },
         tooltip: true,
         tooltipOpts: {
-          content: "%p.0%, %s",
+          content: '%p.0%, %s',
           shifts: {
             x: 20,
             y: 0
